@@ -14,17 +14,8 @@ const Calculator = () => {
   const handleClick = (e) => {
     console.log(e.target.value)
     const currVal = (e.target.value).toString()
-    if (
-      currentOperand[currentOperand.length - 1] === "/" ||
-      currentOperand[currentOperand.length - 1] === "*" ||
-      currentOperand[currentOperand.length - 1] === "+" ||
-      currentOperand[currentOperand.length - 1] === "-"
-    ) {
-      const newOperand = currentOperand.slice(0, currentOperand.length - 1);
-      setCurrentOperand(newOperand + currVal);
-    } else {
-      setCurrentOperand(currentOperand + currVal);
-    }
+    const newOperand = currentOperand.slice(0, currentOperand.length - 1);
+    setCurrentOperand(newOperand + currVal);
   }
 
   const handleAllClear = () => {
