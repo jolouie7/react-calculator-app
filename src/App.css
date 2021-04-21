@@ -7,8 +7,8 @@
 
 .calculator-grid {
   display: grid;
-  /* justify-content: center;
-  justify-items: center; */
+  justify-content: center;
+  /* align-content: center; */
   grid-template-columns: repeat(4, 100px);
   grid-template-rows: minmax(120px, auto) repeat(5, 100px);
 }
@@ -21,5 +21,32 @@
 }
 
 .calculator-grid > button:hover {
-  background-color: green;
+  background-color: teal;
+}
+
+.span-two {
+  grid-column: span 2;
+}
+
+.output {
+  grid-column: 1 / -1;
+  background-color: black;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 1rem;
+  /* The numbers will wrap within the output when there is not enough space on current line */
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.prev-operand {
+  color: lightgrey;
+  font-size: 1rem;
+}
+
+.current-operand {
+  color: white;
+  font-size: 2rem;
 }

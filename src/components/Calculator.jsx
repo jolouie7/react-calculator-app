@@ -4,8 +4,8 @@ const Calculator = () => {
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="prev-operand"></div>
-        <div className="current-operand"></div>
+        <div className="prev-operand">123 + 123</div>
+        <div className="current-operand">456</div>
       </div>
       <button className="span-two">AC</button>
       <button>DEL</button>
