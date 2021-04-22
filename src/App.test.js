@@ -40,7 +40,6 @@ describe("Calculator", () => {
     const delBtn = screen.getByRole("button", { name: /DEL/i });
     userEvent.click(delBtn);
     expect(currentOperand.textContent).toBe("1");
-    // screen.debug(currentOperand);
   });
 
   test("AC (All clear) button works", () => {
@@ -51,7 +50,6 @@ describe("Calculator", () => {
     const acBtn = screen.getByRole("button", { name: /AC/i });
     userEvent.click(acBtn);
     expect(currentOperand.textContent).toBe("");
-    // screen.debug(currentOperand);
   });
 
   // calculate "1 + 1" gives 2
@@ -66,7 +64,6 @@ describe("Calculator", () => {
     userEvent.click(oneBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("2");
-    // screen.debug(currentOperand);
   });
 
   // calculate "4*5/2" gives 10
@@ -86,7 +83,6 @@ describe("Calculator", () => {
     userEvent.click(twoBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("10");
-    // screen.debug(currentOperand);
   });
 
   // calculate "-.32       /.5" gives -0.64
@@ -109,7 +105,6 @@ describe("Calculator", () => {
     userEvent.click(fiveBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("-0.64");
-    // screen.debug(currentOperand);
   });
 
   test("For a case like: 3/-++3", () => {
@@ -128,7 +123,6 @@ describe("Calculator", () => {
     userEvent.click(threeBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("6"); // 3+3
-    // screen.debug(currentOperand);
   });
 
   test("For a case like: ..3", () => {
@@ -141,7 +135,6 @@ describe("Calculator", () => {
     userEvent.click(threeBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("0.3");
-    // screen.debug(currentOperand);
   });
 
   test("For a case like: .7.7", () => {
@@ -157,6 +150,5 @@ describe("Calculator", () => {
     userEvent.click(sevenBtn);
     userEvent.click(calculateBtn);
     expect(currentOperand.textContent).toBe("0.7");
-    // screen.debug(currentOperand);
   });
 });

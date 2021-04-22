@@ -7,7 +7,6 @@ const Calculator = () => {
   const [lastButtonPress, setLastButtonPress] = useState("")
 
   const handleClick = (e) => {
-    // console.log(e.target.value)
     const currVal = (e.target.value).toString()
     setLastButtonPress(currVal)
     if (
@@ -24,11 +23,10 @@ const Calculator = () => {
       // we want a number
       currentOperand[currentOperand.length - 1] === "." && currVal === "."
     ) {
-      // console.log("no decimal");
-      // setCurrentOperand(currentOperand + currVal);
+      // This else if is to catch cases like ..3 and .3.3
+      console.log("No Decimal");
     } else {
-      // decimal is included.
-      // console.log("here");
+      // There is already a decimal
       setCurrentOperand(currentOperand + currVal);
     }
   }
@@ -39,7 +37,6 @@ const Calculator = () => {
 
   const handleDelete = () => {
     const expression = currentOperand.slice(0, currentOperand.length-1)
-    // console.log(expression)
     setCurrentOperand(expression);
   }
 
@@ -100,7 +97,6 @@ const Calculator = () => {
   }
 
   const evaluateExpression = () => {
-    // console.log("evaluate")
     const currExpression = currentOperand.toString();
     if (
       currentOperand === "" ||
