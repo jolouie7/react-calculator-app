@@ -7,11 +7,11 @@ const Calculator = () => {
   const [lastButtonPress, setLastButtonPress] = useState("")
 
   const handleClick = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     const currVal = (e.target.value).toString()
     setLastButtonPress(currVal)
     if (
-      // if the current char in currentOperand is a operation symbol, replace the last char
+      // if the current last char in currentOperand is a operation symbol and currVal is a operation symbol, replace last char with currVal symbol
       (currentOperand[currentOperand.length - 1] === "/" ||
       currentOperand[currentOperand.length - 1] === "*" ||
       currentOperand[currentOperand.length - 1] === "+" ||
@@ -24,11 +24,11 @@ const Calculator = () => {
       // we want a number
       currentOperand[currentOperand.length - 1] === "." && currVal === "."
     ) {
-      console.log("no decimal");
+      // console.log("no decimal");
       // setCurrentOperand(currentOperand + currVal);
     } else {
       // decimal is included.
-      console.log("here");
+      // console.log("here");
       setCurrentOperand(currentOperand + currVal);
     }
   }
@@ -39,7 +39,7 @@ const Calculator = () => {
 
   const handleDelete = () => {
     const expression = currentOperand.slice(0, currentOperand.length-1)
-    console.log(expression)
+    // console.log(expression)
     setCurrentOperand(expression);
   }
 
@@ -100,7 +100,7 @@ const Calculator = () => {
   }
 
   const evaluateExpression = () => {
-    console.log("evaluate")
+    // console.log("evaluate")
     const currExpression = currentOperand.toString();
     if (
       currentOperand === "" ||
@@ -112,8 +112,14 @@ const Calculator = () => {
     ) {
       console.log("Input something")
     } else {
-      let result = calculate(parseCalculationString(currExpression)).toString()
-      if (result === "NaN") {
+      let result = calculate(parseCalculationString(currExpression))
+      // Check for a case like: 23*3* -> = is pressed
+      if (result === "NaN" || result === undefined) {
+        console.log("Error")
+        return alert("Error: Invalid")
+      }
+      result = result.toString()
+      if (result === "NaN" || result === undefined) {
         console.log("NaN error")
         result = "Error"
         setCurrentOperand(result);
@@ -128,7 +134,7 @@ const Calculator = () => {
     <div className="calculator-grid">
       <div className="output">
         <div data-prev-operand className="prev-operand">{prevOperand}</div>
-        <div data-current-operand className="current-operand">{currentOperand}</div>
+        <div data-testid="current-operand" className="current-operand">{currentOperand}</div>
       </div>
       <button onClick={handleAllClear} data-all-clear className="span-two">AC</button>
       <button onClick={handleDelete} data-delete>DEL</button>
@@ -153,12 +159,3 @@ const Calculator = () => {
 }
 
 export default Calculator
-
-// Examples
-// calculate "1 + 2" gives 3
-// calculate "4*5/2" gives 10
-// calculate "-5+-8--11*2" gives 9
-// calculate "-.32       /.5" gives -0.64
-// calculate "(4-2)*3.5" gives 7
-// calculate "2+-+-4" gives Syntax Error (or similar)
-// calculate "19 + cinnamon" gives Invalid Input (or similar)
