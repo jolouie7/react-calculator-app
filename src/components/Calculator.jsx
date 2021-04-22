@@ -1,21 +1,36 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 const Calculator = () => {
   const [prevOperand, setPrevOperand] = useState("")
   const [currentOperand, setCurrentOperand] = useState("");
-
-  // useEffect(() => {
-  //   if (currentOperand !== "" && ".÷*-+".includes(currentOperand[currentOperand.length-1])) {
-  //     const newOperand = currentOperand.slice(0, currentOperand.length)
-  //     setCurrentOperand(newOperand)
-  //   }
-  // }, [currentOperand])
+  const [pressedDecimal, setPressedDecimal] = useState(0); // prevent e.g. 34.. or ..3 -> if 0: can add decimal, if 1: can't add decimal until /,*,+,- is pressed
+  const [lastButtonPress, setLastButtonPress] = useState("")
 
   const handleClick = (e) => {
     console.log(e.target.value)
     const currVal = (e.target.value).toString()
-    const newOperand = currentOperand.slice(0, currentOperand.length - 1);
-    setCurrentOperand(newOperand + currVal);
+    setLastButtonPress(currVal)
+    if (
+      // if the current char in currentOperand is a operation symbol, replace the last char
+      (currentOperand[currentOperand.length - 1] === "/" ||
+      currentOperand[currentOperand.length - 1] === "*" ||
+      currentOperand[currentOperand.length - 1] === "+" ||
+      currentOperand[currentOperand.length - 1] === "-") &&
+      "/*+-".includes(currVal)
+    ) {
+      const newOperand = currentOperand.slice(0, currentOperand.length - 1);
+      setCurrentOperand(newOperand + currVal);
+    } else if (
+      // we want a number
+      currentOperand[currentOperand.length - 1] === "." && currVal === "."
+    ) {
+      console.log("no decimal");
+      // setCurrentOperand(currentOperand + currVal);
+    } else {
+      // decimal is included.
+      console.log("here");
+      setCurrentOperand(currentOperand + currVal);
+    }
   }
 
   const handleAllClear = () => {
@@ -138,3 +153,12 @@ const Calculator = () => {
 }
 
 export default Calculator
+
+// Examples
+// calculate "1 + 2" gives 3
+// calculate "4*5/2" gives 10
+// calculate "-5+-8--11*2" gives 9
+// calculate "-.32       /.5" gives -0.64
+// calculate "(4-2)*3.5" gives 7
+// calculate "2+-+-4" gives Syntax Error (or similar)
+// calculate "19 + cinnamon" gives Invalid Input (or similar)
