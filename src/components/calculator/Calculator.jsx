@@ -1,4 +1,4 @@
-import "../../App.css";
+import "./calculator.css";
 import React, { useState } from "react";
 
 const Calculator = () => {
