@@ -1,0 +1,39 @@
+.calc-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.calc-form {
+  width: 1000px;
+}
+
+.calc-label-container {
+  margin: 3rem 0 2px 0;
+}
+
+div > input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.calc-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.primary-btn {
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.primary-btn:hover {
+  background-color: lightgrey;
+}

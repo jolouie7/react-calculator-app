@@ -1,27 +1,31 @@
-import React, {useState} from 'react'
+import "../../App.css";
+import React, { useState } from "react";
 
 const Calculator = () => {
-  const [prevOperand, setPrevOperand] = useState("")
+  const [prevOperand, setPrevOperand] = useState("");
   const [currentOperand, setCurrentOperand] = useState("");
   const [pressedDecimal, setPressedDecimal] = useState(0); // prevent e.g. 34.. or ..3 -> if 0: can add decimal, if 1: can't add decimal until /,*,+,- is pressed
-  const [lastButtonPress, setLastButtonPress] = useState("")
+  const [lastButtonPress, setLastButtonPress] = useState("");
+
+  const [currentInputExpression, setCurrentInputExpression] = useState("");
 
   const handleClick = (e) => {
-    const currVal = (e.target.value).toString()
-    setLastButtonPress(currVal)
+    const currVal = e.target.value.toString();
+    setLastButtonPress(currVal);
     if (
       // if the current last char in currentOperand is a operation symbol and currVal is a operation symbol, replace last char with currVal symbol
       (currentOperand[currentOperand.length - 1] === "/" ||
-      currentOperand[currentOperand.length - 1] === "*" ||
-      currentOperand[currentOperand.length - 1] === "+" ||
-      currentOperand[currentOperand.length - 1] === "-") &&
+        currentOperand[currentOperand.length - 1] === "*" ||
+        currentOperand[currentOperand.length - 1] === "+" ||
+        currentOperand[currentOperand.length - 1] === "-") &&
       "/*+-".includes(currVal)
     ) {
       const newOperand = currentOperand.slice(0, currentOperand.length - 1);
       setCurrentOperand(newOperand + currVal);
     } else if (
       // we want a number
-      currentOperand[currentOperand.length - 1] === "." && currVal === "."
+      currentOperand[currentOperand.length - 1] === "." &&
+      currVal === "."
     ) {
       // This else if is to catch cases like ..3 and .3.3
       console.log("No Decimal");
@@ -29,18 +33,18 @@ const Calculator = () => {
       // There is already a decimal
       setCurrentOperand(currentOperand + currVal);
     }
-  }
+  };
 
   const handleAllClear = () => {
-    setCurrentOperand("")
-  }
+    setCurrentOperand("");
+  };
 
   const handleDelete = () => {
-    const expression = currentOperand.slice(0, currentOperand.length-1)
+    const expression = currentOperand.slice(0, currentOperand.length - 1);
     setCurrentOperand(expression);
-  }
+  };
 
-  function parseCalculationString(s) {
+  const parseCalculationString = (s) => {
     // --- Parse a calculation string into an array of numbers and operators
     var calculation = [],
       current = "";
@@ -60,9 +64,9 @@ const Calculator = () => {
       calculation.push(parseFloat(current));
     }
     return calculation;
-  }
+  };
 
-  function calculate(calc) {
+  const calculate = (calc) => {
     // --- Perform a calculation expressed as an array of operators and numbers
     var ops = [
         { "^": (a, b) => Math.pow(a, b) },
@@ -94,7 +98,7 @@ const Calculator = () => {
     } else {
       return calc[0];
     }
-  }
+  };
 
   const evaluateExpression = () => {
     const currExpression = currentOperand.toString();
@@ -106,52 +110,92 @@ const Calculator = () => {
       currentOperand === "/" ||
       currentOperand === "*"
     ) {
-      console.log("Input something")
+      console.log("Input something");
     } else {
-      let result = calculate(parseCalculationString(currExpression))
+      let result = calculate(parseCalculationString(currExpression));
       // Check for a case like: 23*3* -> = is pressed
       if (result === "NaN" || result === undefined) {
-        console.log("Error")
-        return alert("Error: Invalid")
+        console.log("Error");
+        return alert("Error: Invalid");
       }
-      result = result.toString()
+      result = result.toString();
       if (result === "NaN" || result === undefined) {
-        console.log("NaN error")
-        result = "Error"
+        console.log("NaN error");
+        result = "Error";
         setCurrentOperand(result);
       } else {
         setCurrentOperand(result);
-        setPrevOperand(currExpression)
+        setPrevOperand(currExpression);
       }
     }
-  }
+  };
 
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div data-prev-operand className="prev-operand">{prevOperand}</div>
-        <div data-testid="current-operand" className="current-operand">{currentOperand}</div>
+        <div className="prev-operand">
+          {prevOperand}
+        </div>
+        <div data-testid="current-operand" className="current-operand">
+          {currentOperand}
+        </div>
       </div>
-      <button onClick={handleAllClear} data-all-clear className="span-two">AC</button>
-      <button onClick={handleDelete} data-delete>DEL</button>
-      <button onClick={handleClick} value={"/"} data-operation>/</button>
-      <button onClick={handleClick} value={1} data-number>1</button>
-      <button onClick={handleClick} value={2} data-number>2</button>
-      <button onClick={handleClick} value={3} data-number>3</button>
-      <button onClick={handleClick} value={"*"} data-operation>*</button>
-      <button onClick={handleClick} value={4} data-number>4</button>
-      <button onClick={handleClick} value={5} data-number>5</button>
-      <button onClick={handleClick} value={6} data-number>6</button>
-      <button onClick={handleClick} value={"+"} data-operation>+</button>
-      <button onClick={handleClick} value={7} data-number>7</button>
-      <button onClick={handleClick} value={8} data-number>8</button>
-      <button onClick={handleClick} value={9} data-number>9</button>
-      <button onClick={handleClick} value={"-"} data-operation>-</button>
-      <button onClick={handleClick} value={"."} data-number>.</button>
-      <button onClick={handleClick} value={0} data-number>0</button>
-      <button onClick={evaluateExpression} data-equals className="span-two">=</button>
+      <button onClick={handleAllClear} className="span-two">
+        AC
+      </button>
+      <button onClick={handleDelete}>
+        DEL
+      </button>
+      <button onClick={handleClick} value={"/"}>
+        /
+      </button>
+      <button onClick={handleClick} value={1}>
+        1
+      </button>
+      <button onClick={handleClick} value={2}>
+        2
+      </button>
+      <button onClick={handleClick} value={3}>
+        3
+      </button>
+      <button onClick={handleClick} value={"*"} data-operation>
+        *
+      </button>
+      <button onClick={handleClick} value={4}>
+        4
+      </button>
+      <button onClick={handleClick} value={5}>
+        5
+      </button>
+      <button onClick={handleClick} value={6}>
+        6
+      </button>
+      <button onClick={handleClick} value={"+"}>
+        +
+      </button>
+      <button onClick={handleClick} value={7}>
+        7
+      </button>
+      <button onClick={handleClick} value={8}>
+        8
+      </button>
+      <button onClick={handleClick} value={9}>
+        9
+      </button>
+      <button onClick={handleClick} value={"-"}>
+        -
+      </button>
+      <button onClick={handleClick} value={"."}>
+        .
+      </button>
+      <button onClick={handleClick} value={0}>
+        0
+      </button>
+      <button onClick={evaluateExpression} className="span-two">
+        =
+      </button>
     </div>
   );
-}
+};
 
-export default Calculator
+export default Calculator;
